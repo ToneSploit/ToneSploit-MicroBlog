@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+
+  <title>
+    {{- if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} &middot; {{ .Site.Title }}{{ end -}}
+  </title>
+
+  {{- with .Description }}<meta name="description" content="{{ . }}">{{ end }}
+
+  {{/* Flash-free theme init — must run before first paint */}}
+  <script>
+    (function(){var t=localStorage.getItem('theme')||
+    (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+    document.documentElement.setAttribute('data-theme',t);
+    document.documentElement.style.colorScheme=t;})();
+  </script>
+
+  {{/* Google Fonts — Pacifico for brand/display headings */}}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+  {{/* PicoCSS v2 — classless */}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
+
+  {{/* Theme styles */}}
+  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+
+  {{/* Micro.blog: custom CSS injected via the platform's "Custom CSS" field */}}
+  {{- with .Site.Params.custom_css }}
+    <style>{{ . | safeCSS }}</style>
+  {{- end }}
+
+  {{/* Canonical */}}
+  <link rel="canonical" href="{{ .Permalink }}">
+
+  {{/* RSS */}}
+  {{ range .AlternativeOutputFormats }}
+    <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ $.Site.Title }}">
+  {{ end }}
+</head>
+<body>
+
+  {{- partial "header.html" . }}
+
+  <main>
+    <div class="page-wrapper">
+      {{- block "main" . }}{{- end }}
+    </div>
+  </main>
+
+  {{- partial "footer.html" . }}
+
+  <script src="{{ "js/theme.js" | relURL }}"></script>
+</body>
+</html>

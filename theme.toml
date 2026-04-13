@@ -1,0 +1,16 @@
+# Micro.blog requires theme.toml (not theme.yaml)
+name        = "ToneSploit Micro.blog"
+license     = "MIT"
+licenselink = "https://opensource.org/licenses/MIT"
+description = "ToneSploit theme adapted for Micro.blog — PicoCSS, orange accent, handles short micro-posts and long articles."
+homepage    = "https://tonesploit.com"
+min_version = "0.120.0"
+
+[author]
+  name     = "Sebastian"
+  homepage = "https://tonesploit.com"
+
+[params]
+  # Micro.blog injects these via the hosted platform UI
+  # avatar     = ""   # URL to avatar image shown in header
+  # custom_css = ""   # Extra CSS injected by Micro.blog's custom CSS field

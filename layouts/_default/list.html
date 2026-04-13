@@ -1,0 +1,74 @@
+{{ define "main" }}
+  <div class="page-layout no-toc">
+    <div class="content-main">
+      <div class="content-card">
+
+        {{- if .Title }}
+          <h1 class="section-heading">{{ .Title }}</h1>
+        {{- end }}
+
+        {{- with .Content }}
+          <div class="list-description">{{ . }}</div>
+        {{- end }}
+
+        <ul class="post-list">
+          {{- range .Paginator.Pages }}
+            {{- $isMicro := not .Title }}
+            <li class="post-list-item{{ if $isMicro }} post-list-item--micro{{ end }}">
+
+              {{- if $isMicro }}
+                {{/* Micro post in list — show content directly */}}
+                <div class="post-list-excerpt">{{ .Content | plainify | truncate 200 }}</div>
+                <div class="post-list-meta">
+                  <a href="{{ .RelPermalink }}">
+                    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006 · 15:04" }}</time>
+                  </a>
+                </div>
+
+              {{- else }}
+                {{/* Regular article in list */}}
+                <h2 class="post-list-title">
+                  <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                </h2>
+                {{- with .Description }}
+                  <p class="post-list-excerpt">{{ . }}</p>
+                {{- else }}
+                  <p class="post-list-excerpt">{{ .Summary | plainify | truncate 160 }}</p>
+                {{- end }}
+                <div class="post-list-meta">
+                  {{- with .Date }}
+                    <time datetime="{{ .Format "2006-01-02" }}">{{ .Format ($.Site.Params.dateFormat | default "January 2, 2006") }}</time>
+                  {{- end }}
+                  &nbsp;&middot;&nbsp;{{ .ReadingTime }} min read
+                  {{- range .Params.tags }}
+                    &nbsp;<a href="{{ "/tags/" | relURL }}{{ . | urlize }}/" class="post-tag">#{{ . }}</a>
+                  {{- end }}
+                </div>
+              {{- end }}
+
+            </li>
+          {{- else }}
+            <li><p class="empty-state">No posts yet.</p></li>
+          {{- end }}
+        </ul>
+
+        {{- with .Paginator }}
+          {{- if gt .TotalPages 1 }}
+            <nav class="pagination" aria-label="Pagination">
+              {{- if .HasPrev }}<a href="{{ .Prev.URL }}">&larr; Newer</a>{{- end }}
+              {{- range .Pagers }}
+                {{- if eq . $.Paginator }}
+                  <span class="active">{{ .PageNumber }}</span>
+                {{- else }}
+                  <a href="{{ .URL }}">{{ .PageNumber }}</a>
+                {{- end }}
+              {{- end }}
+              {{- if .HasNext }}<a href="{{ .Next.URL }}">Older &rarr;</a>{{- end }}
+            </nav>
+          {{- end }}
+        {{- end }}
+
+      </div>
+    </div>
+  </div>
+{{ end }}

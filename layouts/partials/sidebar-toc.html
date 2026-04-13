@@ -1,0 +1,8 @@
+{{- if and .Params.toc (gt (len .TableOfContents) 100) }}
+<aside class="sidebar-toc" aria-label="Table of contents">
+  <div class="toc-inner">
+    <p class="toc-title">On this page</p>
+    {{ .TableOfContents }}
+  </div>
+</aside>
+{{- end }}

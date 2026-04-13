@@ -1,0 +1,55 @@
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <div class="footer-widgets">
+
+      {{/* Recent posts */}}
+      <div>
+        <p class="footer-widget-title">Recent Posts</p>
+        <ul class="footer-links">
+          {{- range first 6 .Site.RegularPages }}
+            {{- if .Title }}
+              <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+            {{- end }}
+          {{- end }}
+        </ul>
+      </div>
+
+      {{/* Categories */}}
+      {{- with .Site.Taxonomies.categories }}
+      <div>
+        <p class="footer-widget-title">Categories</p>
+        <ul class="footer-links">
+          {{- range . }}
+            <li>
+              <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>
+              <span class="footer-cat-count">({{ .Count }})</span>
+            </li>
+          {{- end }}
+        </ul>
+      </div>
+      {{- end }}
+
+      {{/* Tags */}}
+      {{- with .Site.Taxonomies.tags }}
+      <div>
+        <p class="footer-widget-title">Tags</p>
+        <div class="footer-tags">
+          {{- range . }}
+            <a href="{{ .Page.RelPermalink }}" class="post-tag">{{ .Page.Title }}</a>
+          {{- end }}
+        </div>
+      </div>
+      {{- end }}
+
+    </div>
+
+    <div class="footer-bottom">
+      &copy; {{ now.Year }} <a href="{{ "/" | relURL }}">{{ .Site.Title }}</a>
+      {{- with .Site.Params.footerText }}
+        &nbsp;&middot;&nbsp;{{ . }}
+      {{- end }}
+    </div>
+
+  </div>
+</footer>
