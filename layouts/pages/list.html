@@ -1,0 +1,19 @@
+{{ define "main" }}
+  <div class="page-layout no-toc">
+    <div class="content-main">
+      <div class="content-card">
+        <h1 class="section-heading">{{ .Title }}</h1>
+        <ul class="page-list">
+          {{- range .Pages }}
+            <li class="page-list-item">
+              <a href="{{ .RelPermalink }}" class="page-list-title">{{ .Title }}</a>
+              {{- with .Description }}
+                <p class="post-list-excerpt">{{ . }}</p>
+              {{- end }}
+            </li>
+          {{- end }}
+        </ul>
+      </div>
+    </div>
+  </div>
+{{ end }}
